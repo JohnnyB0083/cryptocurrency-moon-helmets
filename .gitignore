@@ -169,4 +169,5 @@ pyenv.cfg
 /Lib/
 
 
-output/*
+output/images/*
+output/metadata/*
