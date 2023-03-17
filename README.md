@@ -19,3 +19,9 @@ moons ecosystem.
 
 [Chapter 7](chapter-7) - Deploy to mainnet - Coming soon
 
+## Info
+
+[johnnyb0083](https://www.reddit.com/user/johnnyb0083)
+
+[Arbitrum Nova Address](https://nova.arbiscan.io/address/0x8149c25DE4Aacdf439892e48ECa9436E64cBFBDd#tokentxns)
+
