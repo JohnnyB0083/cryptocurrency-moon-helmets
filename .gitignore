@@ -167,3 +167,6 @@ cython_debug/
 pyenv.cfg
 /Scripts/
 /Lib/
+
+
+output/*

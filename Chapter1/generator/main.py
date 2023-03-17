@@ -2,12 +2,25 @@ import csv
 import random
 import json
 import os
+import argparse
 
 from bisect import bisect
 from random import random
 
 from PIL import Image
 
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('-n',
+                    "--number-of-images",
+                    type=int,
+                    dest='number_of_images_to_mint',
+                    help='the number of images to mint')
+
+args = arg_parser.parse_args()
+
+number_of_images_to_mint = 10
+if args.number_of_images_to_mint:
+    number_of_images_to_mint = args.number_of_images_to_mint
 
 def weighted_choice(choices):
     """
@@ -127,14 +140,18 @@ def build_image_layers(layer_weights_by_group, layer_dict, number_of_images_to_m
                 layer_order = layer_dict[choice]['order']
                 layers_for_image.append((choice, layer_order))
 
-            layers_as_string = delimiter.join(layers_for_image[0])
+            layer_names = [i[0] for i in layers_for_image]
+            layers_as_string = delimiter.join(layer_names)
             # if this set of assets is unique continue, otherwise roll again
             # this ensures we don't end up with duplicate NFTs.
+            print(layers_as_string)
             if str(layers_as_string) not in image_set:
                 layers_sorted = sorted(layers_for_image, key=lambda x: x[1])
                 layers.append(layers_sorted)
                 image_set.add(layers_as_string)
                 break
+            else:
+                print('Duplicate image found')
 
     return layers
 
@@ -205,8 +222,6 @@ def print_metadata(metadata_list, meta_dir):
 
 
 def main():
-    number_of_images_to_mint = 10
-
     script_dir = os.path.dirname(__file__)
     meta_dir = os.path.join(script_dir, "../output/metadata/")
     asset_dir = os.path.join(script_dir, "../assets/")
