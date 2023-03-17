@@ -26,3 +26,9 @@ Using the metadata and the layers we can construct the images by doing the follo
 
 Simply run the main.py script, if you want to specify images use the -n command line argument to 
 specify how many NFTs to generate.
+
+#### ToDo
+
+- Add flags for the rest of the [space agencies](https://en.wikipedia.org/wiki/List_of_government_space_agencies).
+- Add some more base colors for the helmets.
+- Build out a script to aggregate the trait data to test the probabilities of the minted tokens.
