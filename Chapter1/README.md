@@ -25,4 +25,5 @@ Using the metadata and the layers we can construct the images by doing the follo
 
 #### Running the script
 
-Simply run the main.py script, if you want to specify images use the -n command line argument to specify how many to mint.
+Simply run the main.py script, if you want to specify images use the -n command line argument to 
+specify how many NFTs to generate.

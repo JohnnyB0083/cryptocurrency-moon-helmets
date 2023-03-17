@@ -14,7 +14,7 @@ arg_parser.add_argument('-n',
                     "--number-of-images",
                     type=int,
                     dest='number_of_images_to_mint',
-                    help='the number of images to mint')
+                    help='the number of images to generate')
 
 args = arg_parser.parse_args()
 
@@ -134,24 +134,33 @@ def build_image_layers(layer_weights_by_group, layer_dict, number_of_images_to_m
 
         delimiter = ','
         while True:
+            regen_loops = 0
             layers_for_image = []
+
+            # Get layers for this image
             for group in layer_weights_by_group.keys():
                 choice = weighted_choice(layer_weights_by_group[group])
                 layer_order = layer_dict[choice]['order']
                 layers_for_image.append((choice, layer_order))
 
+            # build unique string consisting of the layers
             layer_names = [i[0] for i in layers_for_image]
             layers_as_string = delimiter.join(layer_names)
+
             # if this set of assets is unique continue, otherwise roll again
             # this ensures we don't end up with duplicate NFTs.
-            print(layers_as_string)
             if str(layers_as_string) not in image_set:
                 layers_sorted = sorted(layers_for_image, key=lambda x: x[1])
                 layers.append(layers_sorted)
                 image_set.add(layers_as_string)
                 break
             else:
-                print('Duplicate image found')
+                regen_loops += 1
+                print('Duplicate image found, regenerating image.')
+
+            if regen_loops > 100:
+                print("100 consecutive images found, breaking to prevent infinite loop.")
+                break
 
     return layers
 
@@ -189,7 +198,7 @@ def build_metadata_for_image(layers, layer_dict, image_number):
 
 def build_image(layers, asset_dir, image_dir, image_number):
     """
-    Build the final image for the helmet
+    Build the final image for the helmet. Create a default base image and apply the layers in order.
     :param layers: The layers of the helmet.
     :param asset_dir: The directory where the layer assets are held.
     :param image_dir: The directory where the images are placed.
@@ -207,7 +216,7 @@ def build_image(layers, asset_dir, image_dir, image_number):
 
 def print_metadata(metadata_list, meta_dir):
     """
-    Print out the metadata for the images
+    Print out the metadata for the images.
     :param metadata_list: A list of all the metadata dictionaries.
     :param meta_dir: The directory where the lists should be placed.
     :return: None
