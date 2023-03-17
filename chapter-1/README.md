@@ -1,6 +1,5 @@
 ## Chapter 1 - Art Generation
 
-
 ### Summary
 In this chapter we will explore how to generate art using python.
 We will be using `.png` layers and stacking them on top of one another to make the images. 
